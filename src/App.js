@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import ProductsPage from "../../ecomapp/src/compoenents/ProductsPage";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = { productList: [] };
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData = async () => {
+    const url = "https://fakestoreapi.com/products";
+    const options = {
+      method: "GET",
+    };
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      const data = await response.json();
+      const updatedData = data.map((product) => ({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        image: product.image,
+      }));
+      this.setState({ productList: updatedData });
+    }
+  };
+
+  render() {
+    const productList = this.state;
+
+    return (
+      <div className="app-container">
+        <ProductsPage productList={productList} />
+      </div>
+    );
+  }
 }
 
 export default App;
