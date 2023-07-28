@@ -1,5 +1,5 @@
 import { Component } from "react";
-import ProductsPage from "../../ecomapp/src/compoenents/ProductsPage";
+import ProductsPage from "./components/ProductsPage";
 import "./App.css";
 
 class App extends Component {
@@ -30,7 +30,7 @@ class App extends Component {
   };
 
   render() {
-    const productList = this.state;
+    const { productList } = this.state;
 
     return (
       <div className="app-container">
